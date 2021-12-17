@@ -1,0 +1,36 @@
+class Solution:
+
+    def minimizeArr(self, matrix, counter):
+        temp = [['0' for m in range(len(matrix[0]))] for n in range(len(matrix))]
+        print(matrix)
+        hasMultiple = False
+        for n in range(len(matrix[0])-1):
+            for m in range(len(matrix)-1):
+                if(matrix[m][n] == '1' and matrix[m+1][n] == '1' 
+                    and matrix[m][n+1] == '1' and matrix[m+1][n+1] == '1'):
+                    temp[m][n] = '1'
+                    hasMultiple = True
+        
+        matrix = temp
+        if hasMultiple:
+            counter += 1
+            return self.minimizeArr(matrix, counter)
+        
+        return counter
+        
+        
+                
+            
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        hasOne = False
+        for n in range(len(matrix[0])):
+            for m in range(len(matrix)):
+                if matrix[m][n] == '1':
+                    hasOne = True
+    
+        if hasOne is False:
+            return 0
+
+        sideLength = self.minimizeArr(matrix, 1)
+        return sideLength ** 2
+        
