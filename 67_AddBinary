@@ -1,0 +1,45 @@
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        deltaLen = len(a) - len(b)
+        
+        #Turn them into strings of equal lenght, so we can add least significant digits
+        if(deltaLen is not 0):
+            buffer = ''
+            for i in range(abs(deltaLen)):
+                buffer += '0'
+                
+            if deltaLen > 0:
+                b = buffer + b
+            else:
+                a = buffer + a
+
+        #From the last element of each array, add together the binary numbers
+        size = len(a)
+        ans = ''
+        carry = 0
+
+        while size >= 0 or carry is not 0:
+            size = size-1 #Remove one right here so we don't have to remove one from size
+            digit = carry
+            if(size >= 0):
+                digit += int(a[size]) + int(b[size])
+            
+            if digit >= 2:
+                carry = 1
+            else:
+                carry = 0
+            
+            if digit % 2 == 1:
+                ans = '1' + ans
+            else:
+                ans = '0' + ans
+        
+        #remove leading 0s
+        firstDigit = len(ans)-1
+        for i in range(len(ans)):
+            if ans[i] == "1":
+                firstDigit = i
+                break;
+        
+        return ans[firstDigit:]
+            
