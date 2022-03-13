@@ -1,0 +1,35 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+         #intuition
+        #Create a stack that stores the last parenthesis type. Pop it when you find an end one and if it matches, then continue
+        #If it doesn't, return false. 
+        
+        #Edge cases: 
+        #1. Not everyone has a pair
+            #Need to make sure that the stack is empty at the end
+        #2. Stack is filled up
+            #Make stack length of the string
+            
+        parenStack = []
+        
+        for char in s:
+            if (char == '[' or char == '(' or char == '{'):
+                parenStack.append(char)
+                
+            elif (char == ']' or char == ')' or char == '}'):
+                
+                if(len(parenStack) == 0):
+                    return False
+            
+                matchingChar = parenStack.pop()
+                if matchingChar == '(' and char != ')':
+                    return False
+                if matchingChar == '[' and char != ']':
+                    return False
+                if matchingChar == '{' and char != '}':
+                    return False
+            
+        if len(parenStack) == 0:
+            return True
+        
+        return False
