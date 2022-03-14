@@ -1,0 +1,32 @@
+class Solution:
+    def simplifyPath(self, path: str) -> str:
+        #how do we handle this?
+        #Probably a lot of regex.
+        # Look to split up the entire string by the '/' mark, removing any token with no data i.e. '//' would result in a dataless token
+        
+        #basically remove any .
+        # '..' allows you to go back one directory level and delete the last token, if possible
+        
+        tokens = path.split('/')
+        
+           
+        
+        numElementsRemoved = 0
+        for i in range(len(tokens)):
+            j = i - numElementsRemoved
+            
+            if tokens[j] == "" or tokens[j] == '.':
+                tokens.remove(tokens[j]) #Removes the first occurence in the list
+                numElementsRemoved = numElementsRemoved + 1
+            
+            elif j > 0 and tokens[j] == '..':
+                tokens.pop(j)
+                tokens.pop(j-1)
+                numElementsRemoved = numElementsRemoved + 2
+                
+            elif tokens[j] == '..':
+                tokens.pop(j)
+                numElementsRemoved = numElementsRemoved + 1
+                
+        return '/' + '/'.join(tokens)
+        
