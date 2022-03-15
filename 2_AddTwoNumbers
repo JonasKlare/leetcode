@@ -1,0 +1,53 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def calculateFromReverseList(self, list: Optional[ListNode]):
+        magnitude = 1
+        value = 0
+        node = list
+        while(node.next is not None):
+            value += magnitude * node.val
+            magnitude *= 10 #each consecutive value is a new digit placement
+            node = node.next
+        value += magnitude * node.val #Final one, node.val is valid, but node.next isn't.
+            
+        return value
+    
+    def constructReverseList(self, value):
+        currValue = value
+        headNode = ListNode(currValue % 10)
+        
+        currValue = currValue // 10
+        currValue = int(currValue)
+        
+        currNode = headNode
+        
+        while(currValue > 0):
+            tempNode = ListNode(currValue % 10)
+            
+            currNode.next = tempNode
+            currNode = tempNode
+            
+            currValue = currValue // 10
+            currValue = math.floor(currValue)
+        
+        return headNode
+            
+    
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        v1 = self.calculateFromReverseList(l1)
+        v2 = self.calculateFromReverseList(l2)
+        
+        combinedValue = v1 + v2
+        print(combinedValue)
+        return self.constructReverseList(combinedValue)
+    
+    
+        
+        
+    
+            
+        
