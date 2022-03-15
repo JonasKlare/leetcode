@@ -1,0 +1,30 @@
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        #Intuition- Match the earliest  '(' with the earliest ')'
+            
+        goodParenPlaces = {}
+        lastLParen = []
+        
+        #Build up a list of the parenthesis placements that are okay.
+        for i in range(len(s)):
+            if s[i] == '(':
+                lastLParen.append(i)
+                
+            if s[i] == ')':
+                if len(lastLParen) is not 0:
+                    #This is a pair of parens
+                    goodParenPlaces[lastLParen[0]] = True
+                    goodParenPlaces[i] = True
+                    lastLParen.pop(0)
+                    
+        #Now reconstruct the string. Using another string to prevent fun counter bugs
+        validWord = ""
+        for i in range(len(s)):
+            if s[i] == '(' or s[i] == ')':
+                if goodParenPlaces.get(i):
+                    validWord += s[i]
+            else:
+                validWord += s[i]
+                
+        return validWord
+                
