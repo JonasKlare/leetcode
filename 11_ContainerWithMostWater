@@ -1,0 +1,18 @@
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        #Naive approach- Take each pair of columns and calculate area that can be stored in them. Save the max. 
+        i = 0
+        j = len(height)-1
+        currMax = min(height[i], height[j]) * (j-i)
+        while(i < j):
+            if (height[i] <= height[j]):
+                i += 1
+            else:
+                j -= 1
+            
+            testMax = min(height[i], height[j]) * (j-i)
+            
+            if testMax >= currMax:
+                currMax = testMax
+                
+        return currMax
