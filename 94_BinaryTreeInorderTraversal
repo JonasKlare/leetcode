@@ -1,0 +1,23 @@
+class Solution:
+    def returnNodes(self, root):
+        arr = []
+        if root is None:
+            return arr
+        
+        if root.left is None and root.right is None:
+            arr += [root.val]
+            return arr
+        
+        if root.left is not None:
+            arr += self.returnNodes(root.left)
+        
+        arr.append(root.val)
+        
+        if root.right is not None:
+            arr += self.returnNodes(root.right)
+            
+        return arr
+            
+        
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        return self.returnNodes(root)
