@@ -1,0 +1,40 @@
+class Solution:
+    def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        #Thought- create an adjacency matrix and from that you can add up who trusts who. 
+        trustMap = {}
+        isTrustedMap = {}
+        
+        if n == 1:
+            return 1
+        
+        for el in trust:
+            if(trustMap.get(el[0]) is not None):
+                trustMap[el[0]] = trustMap.get(el[0])+1
+            else:
+                trustMap[el[0]] = 1
+            
+            if(isTrustedMap.get(el[1]) is not None):
+                isTrustedMap[el[1]] = isTrustedMap.get(el[1])+1
+            else:
+                isTrustedMap[el[1]] = 1
+
+        trustedIndex = -1
+        
+        for i in range(n):
+            isTrustedByAll = False
+            trustsNoOne = False
+            
+            if(trustMap.get(i+1) is None):
+                trustsNoOne = True
+            
+    
+            if(isTrustedMap.get(i+1) is not None and isTrustedMap[i+1] == n-1):
+                isTrustedByAll = True
+            
+            if trustsNoOne and isTrustedByAll:
+                if(trustedIndex == -1):
+                    trustedIndex = i+1
+                else:
+                    return -1
+            
+        return trustedIndex
