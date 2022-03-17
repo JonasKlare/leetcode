@@ -1,0 +1,39 @@
+class Solution:
+    def numTrees(self, n: int) -> int:
+        #initial idea. use a base case and build off of that to create a sort of table for a dp like approach
+        #N is only up to 19, so that can be helpful. 
+        
+        #n=1: 1
+        #n=2: 2
+        #n=3: 5 - (2*n=2) + (1*n=1*n=1) (balanced option)
+        #n=4 (2*n=3) [10] + (2*n=2*n=1) [4] (unbalanced option)
+        #n=5 (2*n=4) [28] + (2*n=3*n=1) [10] + n=2*n=2[4]
+        
+        return self.numTreesHelper(n)[n]
+        
+    
+    def numTreesHelper(self, n):
+        mx = [0] * (n+1)
+        mx[0] = -1
+        mx[1] = 1
+        
+        for i in range(2,n+1):
+            count = mx[i-1]*2
+            
+            if i-3 >= 0:
+                print(i >= 0)
+                for j in range(1,i+1):
+                    if(i-j-1 > 0):
+                        #print("j: ", j, "i-j-1", i-j-1)
+                        count += mx[j]*mx[i-j-1]
+                        #print("mx[j]: ", mx[j], "mx[i-j-1]: ", mx[i-j-1])
+                        #print("newcount unbalanced: ", count)
+                             
+            mx[i] = count
+            print(mx)
+                
+        return mx
+        
+        
+        
+        
