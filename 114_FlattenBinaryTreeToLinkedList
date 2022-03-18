@@ -1,0 +1,49 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def flatten(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        #Here what our goal is is to do a level traversal and apply it to the right value of the previous node
+        #Doing a level traversal is a BFS. It's going to be easier, but less space efficient, to create a new graph
+        #Then set that as the head. Let's start with that though. 
+        if root is None:
+            return root
+        self.flattenHelper(root)
+        
+    #Recursive way of flattening a subtree
+    def flattenHelper(self, root: Optional[TreeNode]):
+        if root.left is None and root.right is None:
+            return root
+        
+        if root.left is None:
+            return self.flattenHelper(root.right)
+        
+        if root.right is None:
+            lastLeftNode = self.flattenHelper(root.left)
+            root.right = root.left
+            root.left = None
+            return lastLeftNode
+        
+        lastLeftNode = self.flattenHelper(root.left)
+        lastRightNode = self.flattenHelper(root.right)
+        lastLeftNode.right = root.right
+        
+        
+       
+        root.right = root.left
+        root.left = None
+        
+        return lastRightNode
+            #Need to append it to the end of the list? Can we do this in better than o(n) time
+            
+    
+        #We edit in place, but also will return the place of the last node as the return value to save on time
+        #complexity
+        
+            
