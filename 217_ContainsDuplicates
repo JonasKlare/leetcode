@@ -1,0 +1,12 @@
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        #Can do this in o(n) time by utilizing a hashmap
+        
+        map = {}
+        for el in nums:
+            if map.get(el) is None:
+                map[el] = True
+            else:
+                return True
+        return False
+        
