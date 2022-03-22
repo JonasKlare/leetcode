@@ -1,0 +1,33 @@
+class Solution:
+    def getSmallestString(self, n: int, k: int) -> str:
+        #some sort of memoization looking table?
+        #Greedily include a's before anything else for min lexicographic strings
+        #Greedily include z's to get maximum length to allow for smaller strings
+        
+        #Recursion- solving problem in smaller space like a 3,27 -> 2,1 and seeing if that works
+        #Add as many Z's as you can, add a pivot element, then add as many A's as you can
+        zCount = 0
+        while(k>=26+n): #When k is larger than 26 + number of values remaining, we know we can add another z.
+            zCount += 1
+            k -= 26
+            n -= 1
+            
+        #Find the pivot element here, if one exists
+        pivotChar = ''
+        if(k>n):
+            pivotChar = self.getCharacterFromNumericValue(k-n+1)
+            k -= n+1
+            n -= 1
+            
+        print(n, k)
+        aCount = n
+        
+        smallestLex = ['a']*aCount + [pivotChar] + ['z']*zCount
+        print("".join(smallestLex))
+        return "".join(smallestLex) 
+        
+    def getNumericValueFromCharacter(self, c):
+        return ord(c)-96
+    
+    def getCharacterFromNumericValue(self, n):
+        return chr(n+96)
